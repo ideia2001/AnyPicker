@@ -282,7 +282,11 @@ $.AnyPicker = $.AnyPicker || {
 
 (function (factory) 
 {
-    if (typeof define === 'function' && define.amd) // AMD. Register as an anonymous module.
+		if (true) // Aplicativos Ideia 2001.
+		{
+			factory(jQuery);
+		}
+		else if (typeof define === 'function' && define.amd) // AMD. Register as an anonymous module.
     {   
         define(['jquery'], factory);
     }
