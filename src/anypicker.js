@@ -2,7 +2,7 @@
 
   AnyPicker - Customizable Picker for Mobile OS
   Version 2.0.9
-  Copyright (c)2017 Lajpat Shah
+  Copyright (c)2022 Lajpat Shah
   Contributors : https://github.com/nehakadam/AnyPicker/contributors
   Repository : https://github.com/nehakadam/AnyPicker
   Homepage : https://nehakadam.github.io/AnyPicker
@@ -279,11 +279,7 @@ $.AnyPicker = $.AnyPicker || {
 
 (function (factory) 
 {
-		if (true) // Aplicativos Ideia 2001.
-		{
-			factory(jQuery);
-		}
-		else if (typeof define === 'function' && define.amd) // AMD. Register as an anonymous module.
+    if (typeof define === 'function' && define.amd) // AMD. Register as an anonymous module.
     {   
         define(['jquery'], factory);
     }
