@@ -350,14 +350,19 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 			$(document).on("mouseup." + apo.setting.timestamp, e.data, apo._onEndDrag);
 		}
 
+		// alteração
 		e.preventDefault();
-	    e.stopPropagation();
-	    return false;
+	    // e.stopPropagation();
+	    // return false;
 	},
 
 	_onDrag: function(e)
 	{
 		var apo = e.data.apo;
+
+		// alteração
+		if(apo.setting.disableTouches) return;
+
 		var iPosNew, iDSDelta, iTSDelta, iTSNDelta, iDSTS, iDir, iDSTSDiff,
 		iTSNew = Date.now();
 
@@ -475,9 +480,10 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 			}
 		}
 
-		e.preventDefault();
-	    e.stopPropagation();
-	    return false;
+		// alteração
+		// e.preventDefault();
+	    // e.stopPropagation();
+	    // return false;
 	},
 
 	_onEndDrag: function(e)
@@ -498,9 +504,10 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 			}
 		}
 
-		e.preventDefault();
-	    e.stopPropagation();
-	    return false;
+		// alteração
+		// e.preventDefault();
+	    // e.stopPropagation();
+	    // return false;
 	},
 
 	_onMouseWheelScroll: function(e)
@@ -552,8 +559,9 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 	{
 		var apo = e.data.apo;
 
-		e.preventDefault();
-	    e.stopPropagation();
+		// alteração
+		// e.preventDefault();
+	    // e.stopPropagation();
 
 		apo._setScrollingData(e);
 		apo._clearScrollTicker();
@@ -572,8 +580,9 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 	{
 		var apo = e.data.apo;
 
-		e.preventDefault();
-	    e.stopPropagation();
+		// alteração
+		// e.preventDefault();
+	    // e.stopPropagation();
 
 		apo._unsetScrollingData();
 	},

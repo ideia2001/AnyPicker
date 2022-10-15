@@ -189,6 +189,9 @@ $.AnyPicker = $.AnyPicker || {
 
 		theme: "Default",
 
+		// alteração
+		disableTouches: false,
+
 		//------------------ Callback Functions Start --------------------------
 
 		onInit: null, // ()
@@ -584,8 +587,10 @@ AnyPicker.prototype = {
 			}
 			else
 			{
+				/* alteração
 				$oInput.off("click." + apo.setting.timestamp);
-				$oInput.on("click." + apo.setting.timestamp, {"apo": apo}, apo._inputElementClicked);
+				$oInput.on("click." + apo.setting.timestamp, {"apo": apo}, apo._inputElementClicked); */
+				$oInput=$oInput;
 			}
 		}
 
@@ -1276,10 +1281,11 @@ AnyPicker.prototype = {
 			apo._setDateTimeTabs("time");
 		});
 	
-		$(window).resize(function()
-		{
-			apo._adjustOnOrientationChange();
-		});
+		if(!ionic.Platform.isAndroid())
+			$(window).resize(function()
+			{
+				apo._adjustOnOrientationChange();
+			});
 	},
 
 	_setDateTimeTabs: function(sSelectedTab)
@@ -1401,18 +1407,19 @@ AnyPicker.prototype = {
 
 	_clearButtonAction: function(e)
 	{
+		// alteração
 		var apo = e.data.apo;
 	
-		apo.tmp.selectedDate = $.AnyPicker.extra.dToday;
-		if(apo.tmp.sInputElemTag !== "" && !(apo.tmp.oInputElemValid.bIsListItem || apo.tmp.oInputElemValid.bIsSelect))
-		{
-			var $oInput = $(apo.setting.inputElement);
+		// apo.tmp.selectedDate = $.AnyPicker.extra.dToday;
+		// if(apo.tmp.sInputElemTag !== "" && !(apo.tmp.oInputElemValid.bIsListItem || apo.tmp.oInputElemValid.bIsSelect))
+		// {
+		// 	var $oInput = $(apo.setting.inputElement);
 			
-			if(apo.tmp.oInputElemValid.bIsInput)
-				$oInput.val("");
-			else
-				$oInput.text("");
-		}
+		// 	if(apo.tmp.oInputElemValid.bIsInput)
+		// 		$oInput.val("");
+		// 	else
+		// 		$oInput.text("");
+		// }
 		apo.showOrHidePicker();
 
 		if($.CF.isValid(apo.setting.buttonClicked))
