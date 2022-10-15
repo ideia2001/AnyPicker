@@ -1,3 +1,7 @@
+# AnyPicker Ideia 2001
+
+Este plugin é utilizado para o campo de pesquisa **"De" - "Até"** implementado pela primeira vez no aplicativo da ZEN. O fork foi necessário para colocar o bundle deste projeto no mobile-core. Fizemos uma alteração para remover o import do jquery, pois os aplicativos da empresa já possuem o jQuery, que é importado no index.html, e portanto não se encontra no package.json. O SEG Automotive é o aplicativo que requereu esta implementação.
+
 ## AnyPicker - Picker Library for Mobile OS 
 
 
