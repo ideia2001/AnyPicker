@@ -1,6 +1,13 @@
 # AnyPicker Ideia 2001
 
-Este plugin é utilizado para o campo de pesquisa **"De" - "Até"** implementado pela primeira vez no aplicativo da ZEN. O fork foi necessário para colocar o bundle deste projeto no mobile-core. Fizemos uma alteração para remover o import do jquery, pois os aplicativos da empresa já possuem o jQuery, que é importado no index.html, e portanto não se encontra no package.json. O SEG Automotive é o aplicativo que requereu esta implementação.
+Este plugin é utilizado para o campo de pesquisa **"De" - "Até"** implementado pela primeira vez no aplicativo da ZEN. O fork foi necessário para colocar o código minificado deste projeto no mobile-core. Fizemos uma alteração para remover o import do jquery, pois os aplicativos da empresa já possuem o jQuery, que é importado no index.html, e portanto não se encontra no package.json. O SEG Automotive é o aplicativo que requereu esta implementação.
+
+### Como efetuar uma atualização no AnyPicker e passá-la ao **mobile-core**?
+
+- Realizar a alteração necessária na pasta *src*.
+- Rodar o comando "grunt" para gerar o código minificado na pasta *dist*.
+- Copiar os "anypicker.min.js" e "anypicker.min.css" para a pasta "mobile-core/src/lib/anypicker".
+- Pronto!!!
 
 ## AnyPicker - Picker Library for Mobile OS 
 
