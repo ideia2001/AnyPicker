@@ -193,6 +193,9 @@ $.AnyPicker = $.AnyPicker || {
 
 		theme: "Default",
 
+		// alteração
+		disableTouches: false,
+
 		//------------------ Callback Functions Start --------------------------
 
 		onInit: null, // ()
@@ -584,8 +587,10 @@ AnyPicker.prototype = {
 			}
 			else
 			{
+				/* alteração
 				$oInput.off("click." + apo.setting.timestamp);
-				$oInput.on("click." + apo.setting.timestamp, {"apo": apo}, apo._inputElementClicked);
+				$oInput.on("click." + apo.setting.timestamp, {"apo": apo}, apo._inputElementClicked); */
+				$oInput=$oInput;
 			}
 		}
 
@@ -1276,10 +1281,11 @@ AnyPicker.prototype = {
 			apo._setDateTimeTabs("time");
 		});
 	
-		$(window).resize(function()
-		{
-			apo._adjustOnOrientationChange();
-		});
+		if(!ionic.Platform.isAndroid())
+			$(window).resize(function()
+			{
+				apo._adjustOnOrientationChange();
+			});
 	},
 
 	_setDateTimeTabs: function(sSelectedTab)
@@ -1401,18 +1407,19 @@ AnyPicker.prototype = {
 
 	_clearButtonAction: function(e)
 	{
+		// alteração
 		var apo = e.data.apo;
 	
-		apo.tmp.selectedDate = $.AnyPicker.extra.dToday;
-		if(apo.tmp.sInputElemTag !== "" && !(apo.tmp.oInputElemValid.bIsListItem || apo.tmp.oInputElemValid.bIsSelect))
-		{
-			var $oInput = $(apo.setting.inputElement);
+		// apo.tmp.selectedDate = $.AnyPicker.extra.dToday;
+		// if(apo.tmp.sInputElemTag !== "" && !(apo.tmp.oInputElemValid.bIsListItem || apo.tmp.oInputElemValid.bIsSelect))
+		// {
+		// 	var $oInput = $(apo.setting.inputElement);
 			
-			if(apo.tmp.oInputElemValid.bIsInput)
-				$oInput.val("");
-			else
-				$oInput.text("");
-		}
+		// 	if(apo.tmp.oInputElemValid.bIsInput)
+		// 		$oInput.val("");
+		// 	else
+		// 		$oInput.text("");
+		// }
 		apo.showOrHidePicker();
 
 		if($.CF.isValid(apo.setting.buttonClicked))
@@ -1813,14 +1820,19 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 			$(document).on("mouseup." + apo.setting.timestamp, e.data, apo._onEndDrag);
 		}
 
+		// alteração
 		e.preventDefault();
-	    e.stopPropagation();
-	    return false;
+	    // e.stopPropagation();
+	    // return false;
 	},
 
 	_onDrag: function(e)
 	{
 		var apo = e.data.apo;
+
+		// alteração
+		if(apo.setting.disableTouches) return;
+
 		var iPosNew, iDSDelta, iTSDelta, iTSNDelta, iDSTS, iDir, iDSTSDiff,
 		iTSNew = Date.now();
 
@@ -1938,9 +1950,10 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 			}
 		}
 
-		e.preventDefault();
-	    e.stopPropagation();
-	    return false;
+		// alteração
+		// e.preventDefault();
+	    // e.stopPropagation();
+	    // return false;
 	},
 
 	_onEndDrag: function(e)
@@ -1961,9 +1974,10 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 			}
 		}
 
-		e.preventDefault();
-	    e.stopPropagation();
-	    return false;
+		// alteração
+		// e.preventDefault();
+	    // e.stopPropagation();
+	    // return false;
 	},
 
 	_onMouseWheelScroll: function(e)
@@ -2015,8 +2029,9 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 	{
 		var apo = e.data.apo;
 
-		e.preventDefault();
-	    e.stopPropagation();
+		// alteração
+		// e.preventDefault();
+	    // e.stopPropagation();
 
 		apo._setScrollingData(e);
 		apo._clearScrollTicker();
@@ -2035,8 +2050,9 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 	{
 		var apo = e.data.apo;
 
-		e.preventDefault();
-	    e.stopPropagation();
+		// alteração
+		// e.preventDefault();
+	    // e.stopPropagation();
 
 		apo._unsetScrollingData();
 	},
