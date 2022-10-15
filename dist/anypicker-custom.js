@@ -2,7 +2,7 @@
 
   AnyPicker - Customizable Picker for Mobile OS
   Version 2.0.9
-  Copyright (c)2022 Lajpat Shah
+  Copyright (c)2017 Lajpat Shah
   Contributors : https://github.com/nehakadam/AnyPicker/contributors
   Repository : https://github.com/nehakadam/AnyPicker
   Homepage : https://nehakadam.github.io/AnyPicker
@@ -193,9 +193,6 @@ $.AnyPicker = $.AnyPicker || {
 
 		theme: "Default",
 
-		// alteração
-		disableTouches: false,
-
 		//------------------ Callback Functions Start --------------------------
 
 		onInit: null, // ()
@@ -210,9 +207,7 @@ $.AnyPicker = $.AnyPicker || {
 		formatOutput: null, // ()
 
 		setOutput: null,
-		onSetOutput: null,
-
-		buttonClicked: null 
+		onSetOutput: null
 
 		//------------------ Callback Functions End --------------------------
 	},
@@ -282,11 +277,7 @@ $.AnyPicker = $.AnyPicker || {
 
 (function (factory) 
 {
-		if (true) // Aplicativos Ideia 2001.
-		{
-			factory(jQuery);
-		}
-		else if (typeof define === 'function' && define.amd) // AMD. Register as an anonymous module.
+    if (typeof define === 'function' && define.amd) // AMD. Register as an anonymous module.
     {   
         define(['jquery'], factory);
     }
@@ -449,24 +440,12 @@ function AnyPicker(element, options)
 
 		if(!$.CF.isValid(options.viewSections))
 		{
-			if($.CF.compareStrings(apo.setting.layout, "fixed"))
-			{
-				apo.setting.viewSections = {
-					header: [],
-					contentTop: [],
-					contentBottom: [],
-					footer: ["cancelButton", "headerTitle", "setButton"]
-				};
-			}
-			else
-			{
-				apo.setting.viewSections = {
-					header: ["cancelButton", "headerTitle", "setButton"],
-					contentTop: [],
-					contentBottom: [],
-					footer: []
-				};
-			}
+			apo.setting.viewSections = {
+				header: ["cancelButton", "headerTitle", "setButton"],
+				contentTop: [],
+				contentBottom: [],
+				footer: []
+			};
 		}
 
 		if($.AnyPicker.extra.bIsiPad)
@@ -591,10 +570,8 @@ AnyPicker.prototype = {
 			}
 			else
 			{
-				/* alteração
 				$oInput.off("click." + apo.setting.timestamp);
-				$oInput.on("click." + apo.setting.timestamp, {"apo": apo}, apo._inputElementClicked); */
-				$oInput=$oInput;
+				$oInput.on("click." + apo.setting.timestamp, {"apo": apo}, apo._inputElementClicked);
 			}
 		}
 
@@ -1285,11 +1262,10 @@ AnyPicker.prototype = {
 			apo._setDateTimeTabs("time");
 		});
 	
-		if(!ionic.Platform.isAndroid())
-			$(window).resize(function()
-			{
-				apo._adjustOnOrientationChange();
-			});
+		$(window).resize(function()
+		{
+			apo._adjustOnOrientationChange();
+		});
 	},
 
 	_setDateTimeTabs: function(sSelectedTab)
@@ -1404,30 +1380,23 @@ AnyPicker.prototype = {
 
 		apo._setOutput();
 		apo.showOrHidePicker();
-
-		if($.CF.isValid(apo.setting.buttonClicked))
-			apo.setting.buttonClicked.call(apo, "set");
 	},
 
 	_clearButtonAction: function(e)
 	{
-		// alteração
 		var apo = e.data.apo;
 	
-		// apo.tmp.selectedDate = $.AnyPicker.extra.dToday;
-		// if(apo.tmp.sInputElemTag !== "" && !(apo.tmp.oInputElemValid.bIsListItem || apo.tmp.oInputElemValid.bIsSelect))
-		// {
-		// 	var $oInput = $(apo.setting.inputElement);
+		apo.tmp.selectedDate = $.AnyPicker.extra.dToday;
+		if(apo.tmp.sInputElemTag !== "" && !(apo.tmp.oInputElemValid.bIsListItem || apo.tmp.oInputElemValid.bIsSelect))
+		{
+			var $oInput = $(apo.setting.inputElement);
 			
-		// 	if(apo.tmp.oInputElemValid.bIsInput)
-		// 		$oInput.val("");
-		// 	else
-		// 		$oInput.text("");
-		// }
+			if(apo.tmp.oInputElemValid.bIsInput)
+				$oInput.val("");
+			else
+				$oInput.text("");
+		}
 		apo.showOrHidePicker();
-
-		if($.CF.isValid(apo.setting.buttonClicked))
-			apo.setting.buttonClicked.call(apo, "clear");
 	},
 
 	_nowButtonAction: function(e)
@@ -1439,18 +1408,12 @@ AnyPicker.prototype = {
 			apo.tmp.selectedDate = apo._getCurrentDate();
 			apo._setSelectedAndInvalidValuesForRows();
 		}
-
-		if($.CF.isValid(apo.setting.buttonClicked))
-			apo.setting.buttonClicked.call(apo, "now");
 	},
 
 	_cancelButtonAction: function(e)
 	{
 		var apo = e.data.apo;
 		apo.showOrHidePicker();
-
-		if($.CF.isValid(apo.setting.buttonClicked))
-			apo.setting.buttonClicked.call(apo, "cancel");
 	},
 
 	_getDeviceOrientation: function()
@@ -1824,19 +1787,14 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 			$(document).on("mouseup." + apo.setting.timestamp, e.data, apo._onEndDrag);
 		}
 
-		// alteração
 		e.preventDefault();
-	    // e.stopPropagation();
-	    // return false;
+	    e.stopPropagation();
+	    return false;
 	},
 
 	_onDrag: function(e)
 	{
 		var apo = e.data.apo;
-
-		// alteração
-		if(apo.setting.disableTouches) return;
-
 		var iPosNew, iDSDelta, iTSDelta, iTSNDelta, iDSTS, iDir, iDSTSDiff,
 		iTSNew = Date.now();
 
@@ -1954,10 +1912,9 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 			}
 		}
 
-		// alteração
-		// e.preventDefault();
-	    // e.stopPropagation();
-	    // return false;
+		e.preventDefault();
+	    e.stopPropagation();
+	    return false;
 	},
 
 	_onEndDrag: function(e)
@@ -1978,10 +1935,9 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 			}
 		}
 
-		// alteração
-		// e.preventDefault();
-	    // e.stopPropagation();
-	    // return false;
+		e.preventDefault();
+	    e.stopPropagation();
+	    return false;
 	},
 
 	_onMouseWheelScroll: function(e)
@@ -2033,9 +1989,8 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 	{
 		var apo = e.data.apo;
 
-		// alteração
-		// e.preventDefault();
-	    // e.stopPropagation();
+		e.preventDefault();
+	    e.stopPropagation();
 
 		apo._setScrollingData(e);
 		apo._clearScrollTicker();
@@ -2054,9 +2009,8 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 	{
 		var apo = e.data.apo;
 
-		// alteração
-		// e.preventDefault();
-	    // e.stopPropagation();
+		e.preventDefault();
+	    e.stopPropagation();
 
 		apo._unsetScrollingData();
 	},
@@ -2762,122 +2716,6 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 });
 
 // --------------------------------- Functions : AnyPicker.PickerComponent End --------------------------------------
-
-
-
-
-// --------------------------------- Functions : AnyPicker.Select Start ------------------------------------
-
-//"use strict";
-
-AnyPicker.prototype = $.extend(AnyPicker.prototype, {
-
-	__setComponentsOfSelect: function()
-	{
-		var apo = this;
-
-		if(apo.setting.dataSource === null)
-		{
-			if(apo.tmp.oElemValid.bIsListItem || apo.tmp.oElemValid.bIsSelect)
-			{
-				var sChild, $oChildElem;
-				apo.setting.components = [];
-
-				var oComponent = {};
-				oComponent.component = 1;
-				oComponent.name = $(apo.elem).data("name");
-				oComponent.label = $(apo.elem).data("label");
-				apo.setting.components.push(oComponent);
-
-				var oArrData = [];
-
-				if(apo.tmp.oElemValid.bIsListItem)
-					sChild = "li";
-				else if(apo.tmp.oElemValid.bIsSelect)
-					sChild = "option";
-
-				$(apo.elem).find(sChild).each(function()
-				{
-					$oChildElem = $(this);
-
-					var oSelectData = {
-
-						val: $oChildElem.attr("value") || $oChildElem.data("value") || $oChildElem.text(),
-						label: $oChildElem.text(),
-						selected: function()
-						{
-							if($oChildElem.attr("selected") || $oChildElem.attr("data-selected") !== undefined && $oChildElem.attr("data-selected") === "true")
-								return true;
-							else
-								return false;
-						},
-						disabled: function()
-						{
-							if($oChildElem.attr("disabled") || $oChildElem.data("disabled") !== undefined && $oChildElem.data("disabled") === "true")
-								return true;
-							else
-								return false;
-						}
-					};
-
-					if(oSelectData.disabled)
-					{
-						oSelectData.selected = false;						
-					}
-					else if(oSelectData.selected)
-					{
-						apo.tmp.selected = {
-							val: oSelectData.val,
-							displayVal: oSelectData.displayVal
-						};
-					}
-
-					oArrData.push(oSelectData);
-				});
-
-				apo.setting.dataSource = [];
-				var oData = {};
-				oData.component = 1;
-				oData.data = oArrData;
-				apo.setting.dataSource.push(oData);
-
-				apo.tmp.numOfComp = 1;
-
-				if($.CF.compareStrings(apo.setting.headerTitle.contentBehaviour, "Dynamic") && $.CF.isValid(apo.setting.headerTitle.format))
-				{
-					if(typeof apo.setting.headerTitle.format === "function")
-						apo.tmp.sHeaderTitleType = "DynamicFunction";
-					else if(typeof apo.setting.headerTitle.format === "string")
-					{
-						apo.tmp.sHeaderTitleType = "DynamicString";
-					}
-				}
-			}
-			else
-				console.log("You will have to specify dataSource either as a JSON object or as <ul>, <ol>, <dl> or <select>");
-		}
-	},
-
-	__disableInvalidRowsOfSelect: function()
-	{
-		var apo = this;
-		var iTempIndex1, bIsInvalidRow,
-		oData = apo.setting.dataSource[0].data;
-
-		for(iTempIndex1 = 0; iTempIndex1 < oData.length; iTempIndex1++)
-		{
-			bIsInvalidRow = $.CF.isValid(oData[iTempIndex1].disabled);
-
-			if(bIsInvalidRow && oData[iTempIndex1].disabled === true)
-			{
-				$(apo.elem).find("#ap-row-0-" + iTempIndex1).addClass("ap-row-disabled");
-			}
-		}
-	}
-
-});
-
-// --------------------------------- Functions : AnyPicker.Select End --------------------------------------
 
 
 
@@ -3932,10 +3770,8 @@ AnyPicker.prototype = $.extend(AnyPicker.prototype, {
 		{
 			if(typeof oFormat === "string")
 				sArrFormat = apo._setDateTimeFormatComponentsArray(oFormat);
-			else if(typeof oFormat === "object")
-				sArrFormat = oFormat;
 			else
-				sArrFormat = (apo.tmp.diffDateTimeFormats ? apo.tmp.sArrInputDateTimeFormat : apo.tmp.sArrDateTimeFormat);
+				sArrFormat = oFormat;
 		}
 		else
 			sArrFormat = (apo.tmp.diffDateTimeFormats ? apo.tmp.sArrInputDateTimeFormat : apo.tmp.sArrDateTimeFormat);
